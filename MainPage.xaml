@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:WeatherApp.ViewModels"
+             x:Class="WeatherApp.MainPage">
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <!-- Указываем цвета из ресурсов для динамического использования -->
+            <GradientStop Color="{DynamicResource BackgroundGradientStart}" Offset="0" />
+            <GradientStop Color="{DynamicResource BackgroundGradientEnd}" Offset="1" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <!--BackgroundColor="{DynamicResource PageBackgroundColor}"> -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="30" VerticalOptions="Center">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <!-- Логотип -->
+                <Image Source="logo.png"
+                   HeightRequest="125"
+                   HorizontalOptions="Center" />
+
+                <Label Text="Погодник"
+                    FontSize="42"
+                    FontAttributes="Bold"
+                    TextColor="{DynamicResource LogoTextColor}"           
+                    VerticalOptions="Center" 
+                    FontFamily="Lora"/>
+            </HorizontalStackLayout>
+
+            <!-- Поле для ввода города -->
+            <Frame Style="{DynamicResource WeatherCityFrameStyle}"
+                HasShadow="True" >
+                <Entry Placeholder="Введите город"
+                   Text="{Binding CityName}" 
+                   Style="{DynamicResource WeatherCityEntryStyle}"
+                   FontSize="20"
+                   HeightRequest="50"/>
+            </Frame>
+
+            <!-- Кнопка запроса погоды -->
+            <Button Text="Получить погоду"
+                    Command="{Binding GetWeatherCommand}"
+                    Style="{DynamicResource PrimaryButtonStyle}"/>
+
+            <!-- Информация о погоде -->
+            <Frame Style="{DynamicResource WeatherInfoFrameStyle}"
+                   IsVisible="{Binding WeatherInfo}"
+                   Padding="8">
+
+                <VerticalStackLayout Spacing="15" >
+                    <Label Style="{DynamicResource WeatherInfoLableStyle}"
+                        Text="{Binding CityName}"
+                        FontSize="28"
+                        Margin="10,0,0,0"/>
+                    <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                        <Image Source="{Binding WeatherInfo.Icon}"
+                           HeightRequest="100" Margin="10,0,0,0"/>
+                        <VerticalStackLayout>
+                            <Label Style="{DynamicResource WeatherInfoLableStyle}"
+                                Text="{Binding WeatherInfo.Description}"
+                                FontSize="22"/>
+
+                            <Label Style="{DynamicResource WeatherInfoLableStyle}"
+                                Text="{Binding WeatherInfo.Temperature, StringFormat='{0}°C'}"
+                           FontSize="36"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Информация о подписке -->
+            <Label Text="Оформите подписку для прогноза на 7 дней!"
+                   FontSize="14"
+                   TextColor="Blue"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

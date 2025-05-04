@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"                    
+                    x:Class="WeatherApp.Resources.Styles.DarkTheme">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Styles/Colors.xaml" />
+        <ResourceDictionary Source="../Styles/Styles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Color x:Key="BackgroundGradientStart">#121212</Color>
+    <Color x:Key="BackgroundGradientEnd">#26D0CE</Color>
+
+    <Color x:Key="PageBackgroundColor">#121212</Color>
+    <!-- Очень тёмный фон  -->
+    <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
+    <!-- Белый текст -->
+    <Color x:Key="SecondaryTextColor">#AAAAAA</Color>
+    <!-- Светло-серый текст -->
+    <Color x:Key="ButtonBackgroundColor">#00C9A7</Color>
+    <!-- Синяя кнопка #1E88E5 -->
+    <Color x:Key="ButtonTextColor">Black</Color>
+    <!-- Белый текст -->
+    <Color x:Key="FrameBackgroundColor">#801F1F1F</Color>
+    <Color x:Key="LogoTextColor">#FFFFFF</Color>
+    <!-- Серо-чёрная карточка -->
+</ResourceDictionary>
