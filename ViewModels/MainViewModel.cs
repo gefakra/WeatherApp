@@ -1,61 +1,87 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using WeatherApp.Models;
 using WeatherApp.Services.Interfaces;
 
-public class MainViewModel : INotifyPropertyChanged
+namespace WeatherApp.ViewModels
 {
-    private readonly IWeatherService _weatherService;
-    private readonly IStorageService _storageService;
-
-    private string _cityName;
-    public string CityName
+    /// <summary>
+    /// ViewModel для главного экрана. Управляет погодной информацией и вводом города.
+    /// </summary>
+    public class MainViewModel : INotifyPropertyChanged
     {
-        get => _cityName;
-        set => SetProperty(ref _cityName, value);
-    }
+        private readonly IWeatherService _weatherService;
+        private readonly IStorageService _storageService;
 
-    private WeatherInfo _weatherInfo;
-    public WeatherInfo WeatherInfo
-    {
-        get => _weatherInfo;
-        set => SetProperty(ref _weatherInfo, value);
-    }
+        private string _cityName = string.Empty;
+        private WeatherInfo? _weatherInfo;
 
-    public ICommand GetWeatherCommand { get; }
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-    public MainViewModel(IWeatherService weatherService, IStorageService storageService)
-    {
-        _weatherService = weatherService;
-        _storageService = storageService;
-       
+        public MainViewModel(IWeatherService weatherService, IStorageService storageService)
+        {
+            _weatherService = weatherService;
+            _storageService = storageService;
 
-        GetWeatherCommand = new Command(async () => await GetWeatherAsync());
+            GetWeatherCommand = new Command(async () => await GetWeatherAsync());
 
-        CityName = _storageService.GetLastCity();
-        if (!string.IsNullOrWhiteSpace(CityName))
-            GetWeatherCommand.Execute(null);
-    }
+            // Автоввод сохранённого города при запуске
+            CityName = _storageService.GetLastCity();
+            if (!string.IsNullOrWhiteSpace(CityName))
+                _ = GetWeatherAsync();
+        }
 
-    private async Task GetWeatherAsync()
-    {
-        if (string.IsNullOrWhiteSpace(CityName)) return;
+        public string CityName
+        {
+            get => _cityName;
+            set => SetProperty(ref _cityName, value);
+        }
 
-        WeatherInfo = await _weatherService.GetWeatherAsync(CityName);
-        var forecast = await _weatherService.GetForecastAsync(CityName);
-        _storageService.SaveLastCity(CityName);
-    }
+        public WeatherInfo? WeatherInfo
+        {
+            get => _weatherInfo;
+            set => SetProperty(ref _weatherInfo, value);
+        }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public ICommand GetWeatherCommand { get; }
 
-    private void SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
-    {
-        if (Equals(field, value)) return;
-        field = value;
-        OnPropertyChanged(propertyName);
+        public bool IsWeatherInfoVisible => WeatherInfo != null;
+
+        /// <summary>
+        /// Асинхронно запрашивает данные о погоде и сохраняет город.
+        /// </summary>
+        private async Task GetWeatherAsync()
+        {
+            if (string.IsNullOrWhiteSpace(CityName))
+                return;
+
+            try
+            {
+                WeatherInfo = await _weatherService.GetWeatherAsync(CityName);
+                _storageService.SaveLastCity(CityName);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Показать пользователю, если надо
+                Console.WriteLine($"Ошибка при получении погоды: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Упрощённая реализация INotifyPropertyChanged.
+        /// </summary>
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value))
+                return false;
+
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
     }
 }

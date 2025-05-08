@@ -1,4 +1,5 @@
 ﻿using WeatherApp.Resources.Styles;
+using Plugin.Firebase.CloudMessaging;
 namespace WeatherApp
 {
     public partial class App : Application
@@ -12,6 +13,19 @@ namespace WeatherApp
 
             // Подписываемся на событие изменения темы
             Application.Current.RequestedThemeChanged += OnRequestedThemeChanged;
+
+            // Инициализируем Firebase
+            FirebaseCloudMessaging.Current.OnTokenRefresh += (s, token) =>
+            {
+                Console.WriteLine($"FCM Token: {token}");
+            };
+
+            FirebaseCloudMessaging.Current.OnNotificationReceived += (s, notification) =>
+            {
+                var title = notification?.Title ?? "Нет заголовка";
+                var body = notification?.Body ?? "Нет текста";
+                Console.WriteLine($"Уведомление: {title} - {body}");
+            };
 
             MainPage = new AppShell();
         }
@@ -36,5 +50,6 @@ namespace WeatherApp
             Application.Current.Resources.MergedDictionaries.Clear();
             Application.Current.Resources.MergedDictionaries.Add(themeDictionary);
         }
+        
     }
 }
