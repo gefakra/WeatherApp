@@ -5,7 +5,8 @@ using Android.OS;
 using Firebase.Messaging;
 using Firebase;
 using Android.Util;
-using Plugin.Firebase.Core.Platforms.Android;
+using Android.Gms.Extensions;
+
 
 namespace WeatherApp
 {
@@ -17,26 +18,15 @@ namespace WeatherApp
             base.OnCreate(savedInstanceState);
             FirebaseApp.InitializeApp(this);
 
-            FirebaseMessaging.Instance.GetToken()
-                .AddOnCompleteListener(new OnCompleteListener());
+            FirebaseMessaging.Instance.SubscribeToTopic("weather-updates");
+            GetFirebaseTokenAsync();
         }
-    }
+    
 
-    public class OnCompleteListener : Java.Lang.Object, Android.Gms.Tasks.IOnCompleteListener
-    {
-        public void OnComplete(Android.Gms.Tasks.Task task)
-        {
-            if (task.IsSuccessful)
+         private async void GetFirebaseTokenAsync()
             {
-                string token = task.Result?.ToString();
-                Log.Debug("FCM", "FCM Token: " + token);
-
-                // Здесь ты можешь сохранить токен в Preferences или передать в C# MAUI код
+                 var token = await FirebaseMessaging.Instance.GetToken();
+                 Console.WriteLine($"Device token: {token}");
             }
-            else
-            {
-                Log.Warn("FCM", "Не удалось получить токен");
-            }
-        }
     }
 }

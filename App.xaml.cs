@@ -1,5 +1,5 @@
 ﻿using WeatherApp.Resources.Styles;
-using Plugin.Firebase.CloudMessaging;
+using WeatherApp.Services;
 namespace WeatherApp
 {
     public partial class App : Application
@@ -14,20 +14,9 @@ namespace WeatherApp
             // Подписываемся на событие изменения темы
             Application.Current.RequestedThemeChanged += OnRequestedThemeChanged;
 
-            // Инициализируем Firebase
-            FirebaseCloudMessaging.Current.OnTokenRefresh += (s, token) =>
-            {
-                Console.WriteLine($"FCM Token: {token}");
-            };
-
-            FirebaseCloudMessaging.Current.OnNotificationReceived += (s, notification) =>
-            {
-                var title = notification?.Title ?? "Нет заголовка";
-                var body = notification?.Body ?? "Нет текста";
-                Console.WriteLine($"Уведомление: {title} - {body}");
-            };
-
             MainPage = new AppShell();
+
+            GetFirebaseTokenAsync();
         }
 
         private void OnRequestedThemeChanged(object sender, AppThemeChangedEventArgs e)
@@ -50,6 +39,17 @@ namespace WeatherApp
             Application.Current.Resources.MergedDictionaries.Clear();
             Application.Current.Resources.MergedDictionaries.Add(themeDictionary);
         }
-        
+
+        private async void GetFirebaseTokenAsync()
+        {
+            var firebaseService = new FirebaseService();
+            var token = await firebaseService.GetDeviceTokenAsync();
+
+            // Вывод токена в консоль (или использовать его для отправки уведомлений)
+            Console.WriteLine($"Device token: {token}");
+
+            // Вы можете сохранить этот токен для дальнейшего использования или отправки уведомлений.
+        }
+
     }
 }
