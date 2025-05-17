@@ -73,7 +73,7 @@
 		</Content>
 	</ItemGroup>
 
-	<ItemGroup  Condition="'$(TargetFramework)' == 'net9.0-android' OR '$(TargetFramework)' == 'net9.0-ios'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android' OR '$(TargetFramework)' == 'net9.0-ios'">
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.60" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.4" />
@@ -96,6 +96,11 @@
 	  <MauiXaml Update="Resources\Styles\LightTheme.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <PackageReference Include="OneSignalSDK.DotNet" Version="5.2.1" />
 	</ItemGroup>
 	
 

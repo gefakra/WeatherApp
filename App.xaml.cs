@@ -15,8 +15,6 @@ namespace WeatherApp
             Application.Current.RequestedThemeChanged += OnRequestedThemeChanged;
 
             MainPage = new AppShell();
-
-            GetFirebaseTokenAsync();
         }
 
         private void OnRequestedThemeChanged(object sender, AppThemeChangedEventArgs e)
@@ -40,16 +38,7 @@ namespace WeatherApp
             Application.Current.Resources.MergedDictionaries.Add(themeDictionary);
         }
 
-        private async void GetFirebaseTokenAsync()
-        {
-            var firebaseService = new FirebaseService();
-            var token = await firebaseService.GetDeviceTokenAsync();
-
-            // Вывод токена в консоль (или использовать его для отправки уведомлений)
-            Console.WriteLine($"Device token: {token}");
-
-            // Вы можете сохранить этот токен для дальнейшего использования или отправки уведомлений.
-        }
+        
 
     }
 }

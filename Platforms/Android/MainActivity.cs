@@ -2,8 +2,7 @@
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
-using Firebase.Messaging;
-using Firebase;
+
 using Android.Util;
 using Android.Gms.Extensions;
 
@@ -15,18 +14,7 @@ namespace WeatherApp
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
-            FirebaseApp.InitializeApp(this);
-
-            FirebaseMessaging.Instance.SubscribeToTopic("weather-updates");
-            GetFirebaseTokenAsync();
+            base.OnCreate(savedInstanceState);            
         }
-    
-
-         private async void GetFirebaseTokenAsync()
-            {
-                 var token = await FirebaseMessaging.Instance.GetToken();
-                 Console.WriteLine($"Device token: {token}");
-            }
     }
 }
