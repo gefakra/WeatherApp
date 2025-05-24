@@ -1,8 +1,8 @@
-﻿using WeatherApp.Services;
+﻿using System.Reflection;
+using System.Text.Json;
+using WeatherApp.Services;
 using WeatherApp.Services.Interfaces;
 using WeatherApp.ViewModels;
-using System.Reflection;
-using System.Text.Json;
 
 namespace WeatherApp;
 
@@ -18,7 +18,9 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+            }); 
+        
+
 
         // Загрузка AppConfig.json
         var configPath = Path.Combine(FileSystem.AppDataDirectory, "AppConfig.json");
@@ -41,6 +43,8 @@ public static class MauiProgram
         var config = JsonSerializer.Deserialize<AppConfiguration>(jsonText);
 
         // DI
+        builder.Services.AddSingleton<HttpClient>();
+        builder.Services.AddSingleton(config);
         builder.Services.AddSingleton<IWeatherService, WeatherService>();        
         builder.Services.AddSingleton<IStorageService, StorageService>();
         builder.Services.AddSingleton<IConfigurationService, ConfigurationService>();

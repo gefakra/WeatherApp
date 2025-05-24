@@ -1,20 +1,35 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
-using Android.Runtime;
 using Android.OS;
-
-using Android.Util;
-using Android.Gms.Extensions;
-
+using Plugin.FirebasePushNotification;
+using AndroidIntent = Android.Content.Intent;
 
 namespace WeatherApp
 {
-    [Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
-    public class MainActivity : MauiAppCompatActivity
-    {
-        protected override void OnCreate(Bundle savedInstanceState)
+    [Activity(
+    Label = "WeatherApp",
+    Theme = "@style/Maui.SplashTheme",
+    MainLauncher = true,
+    ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode |
+                           ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize,
+    LaunchMode = LaunchMode.SingleTop)]
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+    Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable },
+    DataScheme = "yourappscheme")] // не обязательно, но для deep links
+
+public class MainActivity : MauiAppCompatActivity
+{
+    protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);            
+            base.OnCreate(savedInstanceState);
+            FirebasePushNotificationManager.ProcessIntent(this, Intent, false);
         }
+
+    protected override void OnNewIntent(AndroidIntent intent)
+    {
+        base.OnNewIntent(intent);
+        FirebasePushNotificationManager.ProcessIntent(this, intent, false);
     }
+}
 }

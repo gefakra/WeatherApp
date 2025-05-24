@@ -14,7 +14,7 @@
     <!--BackgroundColor="{DynamicResource PageBackgroundColor}"> -->
 
     <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="30" VerticalOptions="Center">
+        <VerticalStackLayout Padding="10" Spacing="50" VerticalOptions="Center">
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <!-- Логотип -->
                 <Image Source="logo.png"
