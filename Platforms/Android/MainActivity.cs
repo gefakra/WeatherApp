@@ -23,6 +23,7 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            //FirebasePushNotificationManager.Initialize(this, true);
             FirebasePushNotificationManager.ProcessIntent(this, Intent, false);
         }
 

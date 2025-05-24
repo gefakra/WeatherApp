@@ -20,18 +20,12 @@ namespace WeatherApp
             MainPage = new AppShell();
 
             //var token = CrossFirebasePushNotification.Current.Token;
-           // Console.WriteLine($"Firebase token: {token}");
+            // Console.WriteLine($"Firebase token: {token}");
 
             CrossFirebasePushNotification.Current.OnTokenRefresh += (s, p) =>
-            {
-                var token = p.Token;
-                // Console.WriteLine($"New FCM Token: {newToken}");
-
-                MainThread.BeginInvokeOnMainThread(async () =>
-                {
-                    await Current.MainPage.DisplayAlert("New FCM Token",token, "OK");
-                });
-            };
+            MainThread.BeginInvokeOnMainThread(() =>
+            Current.MainPage.DisplayAlert("FCM Token", p.Token, "OK")
+              );
 
             CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
             {

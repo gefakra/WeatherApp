@@ -3,6 +3,7 @@ using System.Text.Json;
 using WeatherApp.Services;
 using WeatherApp.Services.Interfaces;
 using WeatherApp.ViewModels;
+using Plugin.FirebasePushNotification;
 
 namespace WeatherApp;
 
@@ -18,8 +19,7 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            }); 
-        
+            });
 
 
         // Загрузка AppConfig.json
