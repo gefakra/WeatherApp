@@ -13,5 +13,6 @@ namespace WeatherApp.Services
 
         public string GetApiKey() => _config.ApiKey;
         public string GetApiBaseUrl() => _config.ApiBaseUrl;
+        public string GetCity() => _config.City;
     }
 }

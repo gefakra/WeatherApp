@@ -48,10 +48,11 @@ public static class MauiProgram
         builder.Services.AddSingleton<IWeatherService, WeatherService>();        
         builder.Services.AddSingleton<IStorageService, StorageService>();
         builder.Services.AddSingleton<IConfigurationService, ConfigurationService>();
-
+        builder.Services.AddSingleton<INoteService, NoteService>();
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddTransient<MainPage>();
-
+        builder.Services.AddSingleton<NotesViewModel>();
+        builder.Services.AddTransient<NotesPage>();
 
         return builder.Build();
     }

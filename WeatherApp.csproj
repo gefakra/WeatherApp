@@ -37,6 +37,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Remove="NotesPage1.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<EmbeddedResource Include="Resources\Configuration\AppConfig.json" />
 	</ItemGroup>
 
@@ -61,10 +65,23 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup>		<PackageReference Include="Plugin.FirebasePushNotification" Version="3.4.35" />
+	<ItemGroup>
+	  <ApplicationDefinition Include="NotesPage.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>		<PackageReference Include="Plugin.FirebasePushNotification" Version="3.4.35" />		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="NotesPage.xaml.cs">
+	    <DependentUpon>NotesPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<MauiXaml Update="NotesPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Resources\Styles\DarkTheme.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

@@ -11,5 +11,11 @@
         
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+    
+    <ShellContent Title="Заметки"
+              ContentTemplate="{DataTemplate local:NotesPage}"
+              Route="NotesPage" />
+    
+    <ShellContent Route="notespage" ContentTemplate="{DataTemplate views:NotesPage}" />
 
 </Shell>

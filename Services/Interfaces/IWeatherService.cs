@@ -5,6 +5,6 @@ namespace WeatherApp.Services.Interfaces
 {
     public interface IWeatherService
     {
-        Task<WeatherInfo> GetWeatherAsync(string city);        
+        Task<WeatherInfo> GetWeatherAsync(string city);              
     }
 }

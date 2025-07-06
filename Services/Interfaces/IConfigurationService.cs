@@ -4,5 +4,6 @@
     {
         string GetApiKey();
         string GetApiBaseUrl();
+        string GetCity();
     }
 }

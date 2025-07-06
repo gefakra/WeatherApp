@@ -51,5 +51,5 @@ public class WeatherService : IWeatherService
         "Rain" => "rain.png",
         "Clear" => "sunny.png",
         _ => "standard.png"
-    };
+    };   
 }

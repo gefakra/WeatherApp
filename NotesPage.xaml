@@ -1,0 +1,35 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:WeatherApp.ViewModels"
+             x:Class="WeatherApp.NotesPage"
+             Title="Заметки">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <DatePicker Date="{Binding SelectedDate}" />
+
+        <Entry Placeholder="Заголовок" Text="{Binding Title}" />
+        <Editor Placeholder="Текст заметки" HeightRequest="100" Text="{Binding NoteText}" />
+
+        <Button Text="Сохранить" Command="{Binding SaveNoteCommand}" />
+
+        <CollectionView ItemsSource="{Binding Notes}" SelectionMode="Single"
+                        SelectedItem="{Binding SelectedNote}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Title}" FontAttributes="Bold" />
+                            <Label Text="{Binding CreatedAt, StringFormat='Дата: {0:dd.MM.yyyy}'}" />
+                            <Label Text="{Binding WeatherCondition}" />
+                            <Label Text="{Binding Location}" FontSize="10" TextColor="Gray" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Удалить" Command="{Binding DeleteNoteCommand}" />
+
+    </VerticalStackLayout>
+</ContentPage>
