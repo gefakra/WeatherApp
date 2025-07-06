@@ -18,4 +18,6 @@
     
     <ShellContent Route="notespage" ContentTemplate="{DataTemplate views:NotesPage}" />
 
+    <ShellContent Title="Календарь" ContentTemplate="{DataTemplate local:CalendarPage}" />
+
 </Shell>

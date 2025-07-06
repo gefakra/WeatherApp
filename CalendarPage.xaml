@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:WeatherApp.ViewModels"
+    x:Class="WeatherApp.CalendarPage"
+    Title="📆 Календарь заметок">
+
+    <ContentPage.BindingContext>
+        <vm:NotesViewModel />
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <Frame Margin="0" CornerRadius="12" HasShadow="True" BackgroundColor="#F0F4F8">
+            <DatePicker
+        Date="{Binding SelectedDate}"
+        HorizontalOptions="Center"
+        Format="dddd, dd MMM yyyy"
+        TextColor="#333"
+        FontSize="18"/>
+        </Frame>
+
+        <Label
+      Text="Заметки на выбранную дату"
+      FontAttributes="Bold"
+      FontSize="16"
+      TextColor="#555"/>
+
+        <CollectionView
+      ItemsSource="{Binding Notes}"
+      EmptyView="Нет заметок на эту дату"
+      SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+            Padding="12"
+            Margin="0,5"
+            BackgroundColor="White"
+            CornerRadius="8"
+            HasShadow="True">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16" TextColor="#222" />
+                            <Label Text="{Binding NoteText}" FontSize="14" LineBreakMode="WordWrap" TextColor="#444"/>
+                            <Label
+                Text="{Binding WeatherCondition, StringFormat='Погода: {0}'}"
+                FontSize="12"
+                TextColor="#888"
+                Margin="0,8,0,0"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>     
+
+        <Button
+      Text="➕ Добавить заметку"
+      SemanticProperties.Hint="Добавить новую заметку для выбранной даты"
+      CornerRadius="24"
+      BackgroundColor="#007AFF"
+      TextColor="White"
+      FontSize="16"
+      HeightRequest="48"
+      Command="{Binding AddNoteCommand}" />
+    </VerticalStackLayout>
+
+</ContentPage>
