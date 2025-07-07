@@ -30,6 +30,7 @@
         </CollectionView>
 
         <Button Text="Удалить" Command="{Binding DeleteNoteCommand}" />
+        
 
     </VerticalStackLayout>
 </ContentPage>

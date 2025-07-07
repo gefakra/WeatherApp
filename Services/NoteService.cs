@@ -35,8 +35,8 @@ namespace WeatherApp.Services
 
             public Task<int> DeleteNoteAsync(Note note)
             {
-                return _database.DeleteAsync(note);
+                 return _database.DeleteAsync(note);
             }
-        
+
     }
 }

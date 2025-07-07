@@ -52,6 +52,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddSingleton<NotesViewModel>();
+        builder.Services.AddTransient<CalendarPage>();
         builder.Services.AddTransient<NotesPage>();
 
         return builder.Build();

@@ -5,18 +5,12 @@ namespace WeatherApp;
 public partial class NotesPage : ContentPage
 {
     
-    public string City
-    {
-        set
-        {
-            if (BindingContext is NotesViewModel vm)
-                vm.City = value;
-        }
-    }
+    public string City { get; set; }    
+    
 
-    public NotesPage()
+    public NotesPage(NotesViewModel viewMode)
     {
         InitializeComponent();
-        BindingContext = App.Current.Services.GetService<NotesViewModel>();
+        BindingContext = viewMode;
     }
 }

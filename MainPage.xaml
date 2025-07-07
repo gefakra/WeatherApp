@@ -33,6 +33,7 @@
             <Frame Style="{DynamicResource WeatherCityFrameStyle}"
                 HasShadow="True" >
                 <Entry Placeholder="Введите город"
+                   x:Name="CityName"
                    Text="{Binding CityName}" 
                    Style="{DynamicResource WeatherCityEntryStyle}"
                    FontSize="20"
